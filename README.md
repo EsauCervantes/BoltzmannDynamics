@@ -47,6 +47,6 @@ We use Mathematica’s ODE solvers with controlled precision and step sizes to o
 ```text
 Boltzmann-equations/
 │
-├── cBE.nb                  # Main Mathematica notebook with the coupled ODE solver
-├── plots/                  # (Optional) Generated figures: Y(x), T'/T, relic density, etc.
+├── cBE_routines.nb         # Main Mathematica notebook with the coupled ODE solver
+├── run.nb                  # An example of a parameter point is shown with plots
 └── README.md               # This file
