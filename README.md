@@ -1,11 +1,11 @@
 # Boltzmann Equation Solver for Cannibal Dark Sectors
 
-This repository contains a **numerical solver for coupled Boltzmann equations** arising in cannibal dark sector models produced via the freeze-in mechanism, as studied in
+This repository contains a **numerical solver for coupled Boltzmann equations** arising in self-interacting dark matter models produced via the freeze-in mechanism, as studied in
 
 > **E. Cervantes**, *Freezing-in cannibal dark sectors* (2024).  
 > [arXiv:2407.12104](https://arxiv.org/abs/2407.12104)
 
-The code is written in **Mathematica** and is designed to be fully reproducible.
+The code is written in **Wolfram Mathematica** and is designed to be fully reproducible.
 
 ---
 
@@ -18,8 +18,8 @@ found in the cBE with mediator.wl file. The code contains production from Higgs 
 The code includes:
 
 - **Freeze-in production** of $S$ and/or $\phi$ from the SM bath (Higgs Portal)
-- **Cannibalization processes** in the dark sector ($\phi \phi \phi \leftrightarrow \phi \phi $)
-- **Hidden sector temperature evolution and yield**
+- **Self-interacting processes** in the dark sector ($\phi \phi \phi \leftrightarrow \phi \phi $)
+- **Hidden sector temperature evolution and co-moving number density**
 
 ---
 
@@ -27,13 +27,13 @@ The code includes:
 
 ### Coupled Boltzmann equations
 
-The Boltzmann equation is an integro-partial differential equation, whose solution is the probabilistic phase space distribution function. Solving it in full generality is computationally very expensive and usually not necessary. For instance, when the system is in thermal equilibrium, tracking the temperature and comoving number of particles is sufficient. This code does exactly this, and it is optimized to deal with stiffness during freeze-out. The solver also includes the $3 \leftrightarrow 2$ collision integral tabulated as a function of $m/T$.
+The Boltzmann equation is an integro differential equation, whose solution is the phase-space distribution function of an ensemble of particles. Solving it in full generality is computationally expensive and often not really necessary. For instance, when the system is in thermal equilibrium, tracking the temperature and comoving number of particles is sufficient, as the system can be described by a Bose-Einstein or Fermi-Dirac distribution. This code does exactly this, and it is optimized to deal with stiffness during freeze-out. The solver also includes the $3 \leftrightarrow 2$ collision integral tabulated as a function of $m/T$.
 
 ### Hidden sector temperature tracking
 
 The solver tracks the evolution of the **dark-sector temperature** $T'$, allowing for:
 
-- Adiabatic cooling/heating due to cannibalization
+- Heating due to $3\to 2$
 - Entropy exchange between the dark matter and the mediator
 
 ### Stiff ODE handling
@@ -48,7 +48,7 @@ We use Mathematica’s ODE solvers with controlled precision and step sizes to o
 ```text
 Boltzmann-equations/
 │
-├── BoltzmannSolver.nb      # Main Mathematica notebook with the coupled ODE solver
+├── cBE.nb and cBE with mediator.wl      # Main Mathematica notebook with the coupled ODE solver
 ├── parameters/             # (Optional) Benchmark parameter files
 ├── plots/                  # (Optional) Generated figures: Y(x), T'/T, relic density, etc.
 └── README.md               # This file
