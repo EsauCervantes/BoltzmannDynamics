@@ -11,13 +11,12 @@ The code is written in **Wolfram Mathematica** and is designed to be fully repro
 
 In our work we consider two scenarios: a dark sector composed only by a singlet unstable dark matter candidate $\phi$ (cBE.wl) and a dark sector composed of:
 
-- A **dark matter particle** $S$ with self number changing reactions of the form $3\leftrightarrow 2$,
-- A **mediator** $\phi$,
+- A **dark matter particle** $phi$ with self number changing reactions of the form $3\leftrightarrow 2$,
 
-found in the cBE with mediator.wl file. The code contains production from Higgs annihilation/decay as well as production from electroweak gauge bosons. For details see the paper.
+The code contains production from Higgs decay as main source of dark matter production. For details see the paper.
 The code includes:
 
-- **Freeze-in production** of $S$ and/or $\phi$ from the SM bath (Higgs Portal)
+- **Freeze-in production** of $\phi$ from the SM bath (Higgs Portal)
 - **Self-interacting processes** in the dark sector ($\phi \phi \phi \leftrightarrow \phi \phi $)
 - **Hidden sector temperature evolution and co-moving number density**
 
@@ -48,7 +47,6 @@ We use Mathematica’s ODE solvers with controlled precision and step sizes to o
 ```text
 Boltzmann-equations/
 │
-├── cBE.nb and cBE with mediator.wl      # Main Mathematica notebook with the coupled ODE solver
-├── parameters/             # (Optional) Benchmark parameter files
+├── cBE.nb                  # Main Mathematica notebook with the coupled ODE solver
 ├── plots/                  # (Optional) Generated figures: Y(x), T'/T, relic density, etc.
 └── README.md               # This file
