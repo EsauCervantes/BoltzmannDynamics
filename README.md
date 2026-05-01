@@ -1,4 +1,4 @@
-# Boltzmann Equation Solver for Cannibal Dark Sectors
+# Boltzmann Equation Solver for Dark Matter in cosmology
 
 This repository contains a **numerical solver for coupled Boltzmann equations** arising in self-interacting dark matter models produced via the freeze-in mechanism, as studied in
 
