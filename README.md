@@ -37,6 +37,10 @@ The solver tracks the evolution of the **dark-sector temperature** $T'$, allowin
 The coupled Boltzmann equations are often **stiff** during cannibal phases.  
 We use Mathematica’s ODE solvers with controlled precision and step sizes to obtain stable solutions. From the late-time asymptotic value of Y, the code computes the dark matter relic abundance
 
+### Run
+
+In the run.nb notebook we provide an example of how to use the solver, which is wrapped in the routine cBE_solver[] with final relic density and plots.
+ 
 ---
 
 ## Repository Structure
