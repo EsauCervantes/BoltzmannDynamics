@@ -30,10 +30,7 @@ The Boltzmann equation is an integro differential equation, whose solution is th
 
 ### Hidden sector temperature tracking
 
-The solver tracks the evolution of the **dark-sector temperature** $T'$, allowing for:
-
-- Heating due to $3\to 2$
-- Entropy exchange between the dark matter and the mediator
+The solver tracks the evolution of the **dark-sector temperature** $T'$, allowing for heating due to $3\to 2$.
 
 ### Stiff ODE handling
 
@@ -49,4 +46,6 @@ Boltzmann-equations/
 │
 ├── cBE_routines.nb         # Main Mathematica notebook with the coupled ODE solver
 ├── run.nb                  # An example of a parameter point is shown with plots
+├── collision integrals.nb   # Implementation of the 2->3 collision integrals for n and Tphi with routine tabulations. Tabulations are already stored in the files folder
+├── files   # tabulations of the collision integrals in .dat format as a function of mphi/Tphi. 
 └── README.md               # This file
