@@ -9,9 +9,7 @@ The code is written in **Wolfram Mathematica** and is designed to be fully repro
 
 ---
 
-In our work we consider two scenarios: a dark sector composed only by a singlet unstable dark matter candidate $\phi$ (cBE.wl) and a dark sector composed of:
-
-- A **dark matter particle** $phi$ with self number changing reactions of the form $3\leftrightarrow 2$,
+In our work we consider a dark sector composed only by a singlet unstable dark matter candidate $\phi$. The solver is within cBE_routines.wl.
 
 The code contains production from Higgs decay as main source of dark matter production. For details see the paper.
 The code includes:
@@ -50,6 +48,6 @@ Boltzmann-equations/
 │
 ├── cBE_routines.nb         # Main Mathematica notebook with the coupled ODE solver
 ├── run.nb                  # An example of a parameter point is shown with plots
-├── collision integrals.nb   # Implementation of the 2->3 collision integrals for n and Tphi with routine tabulations. Tabulations are already stored in the files folder
+├── collision integrals.nb   # Implementation of the 2->3 collision integrals for n and Tphi with routine tabulations. 
 ├── files   # tabulations of the collision integrals in .dat format as a function of mphi/Tphi. 
 └── README.md               # This file
