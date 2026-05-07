@@ -1,9 +1,14 @@
 (* ::Package:: *)
 
+(* ::Section:: *)
 (*Definition of collision integral routines*)
 
 
-(*Below I define the matrix element in the Lab frame, p1,p2->p3,p4,p5 with p3+p4 at rest. It turns out that the integrals are much faster this way than in the CM frame (p1+p2 at rest).*)
+(* ::Text:: *)
+(*Here I defined the matrix element in the Lab frame, p1,p2->p3,p4,p5 with p3+p4 at rest. It turns out that the integrals are much faster this way than in the CM frame (p1+p2 at rest).*)
+
+
+SetDirectory[NotebookDirectory[]];
 
 
 M=Compile[{{st,_Real,0},{E5t,_Real,0},{x,_Real,0},{xs,_Real,0},{\[Phi],_Real,0}},
@@ -45,12 +50,33 @@ average2to3[xt_,m_,ac_,points_]:=1/(8(2Pi)^4)*1/4 facC0 *m/xt 9m^2 m *(Sqrt[3]3)
 Method->{"QuasiMonteCarlo","MaxPoints"->points}]
 
 
+\[Sigma]2to3[0.1,9*0.1^2*1.5,10,10]
+
+
+9*0.1^2
+
+
+Ecm^2->s
+
+
+Sqrt[9*0.1^2*1.2]/2
+
+
+E1=Sqrt[9*0.1^2*1.5]/2;
+
+
+4Pi 1/(64Pi^2 s)/.s->(2E1)^2
+
+
+(0.0001920216100530995`/0.14736568804805122`)^-1
+
+
 (*f\[Sigma][]:=Module[{lphi=1,mphi=0.1,g=Sqrt[3 *0.1^2],m,b,r},
 
 ];
 f\[Sigma][];*)
 lphi=1;mphi=0.1;g=Sqrt[3 *0.1^2];
-r=Import["files/tabulated_sigma,lphi=1,mphi=0.1.dat"]; (*We can re-use some tabulations already performed for the paper*)
+r=Import["files/tabulated_sigma,lphi=1,mphi=0.1.dat"];
 \[Sigma]i=Interpolation[r/.{x_,y_}->{x,Log10[y]},Method->"Spline",InterpolationOrder->1];
 m=(\[Sigma]i[(35*mphi)^2]-Log10[\[Sigma]2to3[mphi,(70mphi)^2,6*10^6,19]])/(Log10[(35*mphi)^2]-Log10[(70*mphi)^2]);
 b=\[Sigma]i[(35*mphi)^2]-m*Log10[(35*mphi)^2];
@@ -86,7 +112,8 @@ average2to3wP2Ei[1.]//Timing
 LogLogPlot[Qii[x,0.1],{x,0,20}]
 
 
-(*Below the definition of Int[M^2 p^2/E] (cross section with factor p^2/E inside the final phase space integral).
+(* ::Section:: *)
+(*definition of Int[M^2 p^2/E] (cross section with factor p^2/E inside the final phase space integral).*)
 
 
 dataQ=Import["files/eta_integral2.dat"];
@@ -104,7 +131,16 @@ factor=(1/(2Pi)^4 1/4)*1/2*1/(8(2Pi)^4);
 P2Eaveraged2[xT_?NumericQ,points_?NumericQ,ac_?NumericQ]:=(*1/nphieq[xT,m]^39m^2mm^2/2*)factor (*1/nphieq[xT,1]^3*)NIntegrate[(*IntegrandP2Averaged[xT,st,E5t,xA,xs,\[Phi]]*)(E^(-((3 xT)/Sqrt[st]))  Sqrt[-(4/3)+3/st] Sqrt[-((-3+2 E5t Sqrt[st]+st)/st)] (E5t (2 (-1+E5t^2) st xA (Sqrt[st]+3 xT)+9 E^((3 xT)/Sqrt[st]) E5t Sqrt[(-1+E5t^2) st] xT^2 BesselK[2,(3 xT)/Sqrt[st]])-27 E^((3 xT)/Sqrt[st]) Sqrt[-1+E5t^2] xT^3 Qii[(3 xT)/Sqrt[st],(Sqrt[-1+E5t^2] xA)/E5t]))/(E5t Sqrt[9-6 E5t Sqrt[st]+st] xT^3)(*3 /m^2*)M[st,E5t,xA,xs,\[Phi]]^2 1/st^2,{st,10^-10,10^-5,10^-4,10^-2,10^-1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.85,0.9,0.95,0.99,0.999,1},{E5t,1,-( (-3+st)/(2 Sqrt[st]))},{xA,-1,0,1},{xs,-1,0,1},{\[Phi],0,2Pi},Method->{"QuasiMonteCarlo","MaxPoints"->points,"SymbolicProcessing"->0.},AccuracyGoal->ac,PrecisionGoal->13,WorkingPrecision->MachinePrecision];
 
 
-factor=(1/(2Pi)^4 1/4)*1/2*1/(8(2Pi)^4); (*overall factor that wll multiply the integrals defined above*)
+st/Sqrt[9-4 st]*1/(1536 (m^2) (\[Pi]^4) )
+
+
+factor=(1/(2Pi)^4 1/4)*1/2*1/(8(2Pi)^4);
+
+
+factor
+
+
+1/(16384 \[Pi]^8) (9 m^5)/2
 
 
 \[Sigma]T[st_?NumericQ,cosh_?NumericQ,points_,ac_]:=(*the first 1/2 comes from integrating two momenta in their CM. The second term comes from (1/(4F)). The third term comes from 1/(2^3(2\[Pi])^9)(2\[Pi])(2\[Pi])^4*)st/ Sqrt[9-4 st](*1/(1536 m^2 \[Pi]^4)*Sqrt[3]m1/2lphi^3/m^2m m  <- one m from dE5 = m dE5t and one from p3^2/E3*) NIntegrate[Integrand[st,E5t,x,xs,\[Phi]](cosh E5t+Sqrt[-1+cosh^2] Sqrt[-1+E5t^2] x-1/(cosh E5t+Sqrt[-1+cosh^2] Sqrt[-1+E5t^2] x)),{E5t,1,(3-st)/(2 Sqrt[st])},{x,-1,1},{xs,-1,1},{\[Phi],0,2Pi},WorkingPrecision->MachinePrecision,AccuracyGoal->ac,PrecisionGoal->20,
@@ -142,6 +178,15 @@ Assuming[m>0&&st>0,Exp[-Sqrt[s] cosh/Tphi]/.s->9 m^2/st/.Tphi->m/xT//FullSimplif
 \[Sigma]Ti = Interpolation[\[Sigma]tabulated/.{x_,y_,z_}->{x,y,Log10[z]},InterpolationOrder->1,Method->"Spline"];
 
 
+1/(1536 m^2 \[Pi]^4) Sqrt[3]m 3 /m^2 m
+
+
+1/(1536 m^2 \[Pi]^4)*Sqrt[3] 3/m m m
+
+
+1/(1536 m^2 \[Pi]^4)*Sqrt[3] 3/m m m 1/(2(2Pi)^4) 9m^4 9m^2
+
+
 averagesecondmom1[xT_?NumericQ,ac_,points_]:=NIntegrate[Sqrt[9-4 st]/st^3 Integrand[st,E5t,x,xs,\[Phi]]((Sqrt[st] BesselK[2,(3 xT)/Sqrt[st]])/(3 xT) E5t+2/27 (E^(-((3 xT)/Sqrt[st])) st (Sqrt[st]+3 xT))/ (xT^3) Sqrt[-1+E5t^2] x),{st,10^-10,10^-5,10^-4,10^-2,10^-1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.85,0.9,0.95,0.99,0.999,0.999999999999999,1},{E5t,1,(3-st)/(2 Sqrt[st])},{x,-1,1},{xs,-1,1},{\[Phi],0,2Pi},Method->{"QuasiMonteCarlo","MaxPoints"->points,"SymbolicProcessing"->0.},AccuracyGoal->ac,PrecisionGoal->20,WorkingPrecision->MachinePrecision]
 
 
@@ -154,6 +199,13 @@ averagesecondmom1[8.001939197344099,15,10^7]+averagesecondmom2[8.001939197344099
 averagesecondmomFUL[xT_?NumericQ,ac_,points_]:=(*1/(1536 m^2 \[Pi]^4)*Sqrt[3]3/m m m 1/(2(2Pi)^4) 9m^4 9m^2*)NIntegrate[(Sqrt[-1+cosh^2] Sqrt[9-4 st])/st^3 E^(-((3 cosh xT)/Sqrt[st])) Integrand[st,E5t,x,xs,\[Phi]](cosh E5t+Sqrt[-1+cosh^2] Sqrt[-1+E5t^2] x-1/(cosh E5t+Sqrt[-1+cosh^2] Sqrt[-1+E5t^2] x)),{st,10^-10,10^-5,10^-4,10^-2,10^-1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.85,0.9,0.95,0.99,0.999,0.999999999999999},{E5t,1,(3-st)/(2 Sqrt[st])},{x,-1,1},{xs,-1,1},{\[Phi],0,2Pi},{cosh,1,1.00000001,1.0001,1.01,1.1,1.2,1.3,1.5,2.,3.,5.,9,10,20,100.,1000.,100000.},Method->{"QuasiMonteCarlo","MaxPoints"->points,"SymbolicProcessing"->0.},AccuracyGoal->ac,PrecisionGoal->20,WorkingPrecision->MachinePrecision]
 
 
+averagesecondmomFUL[8.001939197344099,10,2*10^8]//Timing
+
+
+1/(1536 m^2 \[Pi]^4)*Sqrt[3] 3/m m m 1/(2(2Pi)^4) 9m^4 9m^2
+
+
+(* ::Subsection:: *)
 (*Cannibal Reactions tabulated*)
 
 
@@ -179,7 +231,7 @@ Export["files/dataC2V2.dat",dataC2]*),
 TabulateP2Eaveraged[]
 
 
-P2Eaveraged[xT_?NumericQ,points_?NumericQ,ac_?NumericQ]:=(*Overall factors that are included later on: 1/nphieq[xT,m]^39m^2mm^2/2*)(*factor*) NIntegrate[(E^(-((3 xT)/Sqrt[st]))  Sqrt[-(4/3)+3/st] Sqrt[-((-3+2 E5t Sqrt[st]+st)/st)] (E5t (2 (-1+E5t^2) st xA (Sqrt[st]+3 xT)+9 E^((3 xT)/Sqrt[st]) E5t Sqrt[(-1+E5t^2) st] xT^2 BesselK[2,(3 xT)/Sqrt[st]])))/(E5t Sqrt[9-6 E5t Sqrt[st]+st] xT^3) M[st,E5t,xA,xs,\[Phi]]^2 1/st^2,{st,10^-10,10^-5,10^-4,10^-2,10^-1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.85,0.9,0.95,0.99,0.999,1},{E5t,1,-( (-3+st)/(2 Sqrt[st]))},{xA,-1,0,1},{xs,-1,0,1},{\[Phi],0,2Pi},Method->{"QuasiMonteCarlo","MaxPoints"->points,"SymbolicProcessing"->0.},AccuracyGoal->ac,PrecisionGoal->13,WorkingPrecision->MachinePrecision];
+P2Eaveraged[xT_?NumericQ,points_?NumericQ,ac_?NumericQ]:=(*1/nphieq[xT,m]^39m^2mm^2/2*)(*factor*) NIntegrate[(E^(-((3 xT)/Sqrt[st]))  Sqrt[-(4/3)+3/st] Sqrt[-((-3+2 E5t Sqrt[st]+st)/st)] (E5t (2 (-1+E5t^2) st xA (Sqrt[st]+3 xT)+9 E^((3 xT)/Sqrt[st]) E5t Sqrt[(-1+E5t^2) st] xT^2 BesselK[2,(3 xT)/Sqrt[st]])))/(E5t Sqrt[9-6 E5t Sqrt[st]+st] xT^3) M[st,E5t,xA,xs,\[Phi]]^2 1/st^2,{st,10^-10,10^-5,10^-4,10^-2,10^-1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.85,0.9,0.95,0.99,0.999,1},{E5t,1,-( (-3+st)/(2 Sqrt[st]))},{xA,-1,0,1},{xs,-1,0,1},{\[Phi],0,2Pi},Method->{"QuasiMonteCarlo","MaxPoints"->points,"SymbolicProcessing"->0.},AccuracyGoal->ac,PrecisionGoal->13,WorkingPrecision->MachinePrecision];
 
 
-P2Eaverageds2[xT_?NumericQ,points_?NumericQ,ac_?NumericQ]:=(*Overall factors that are included later on: 1/nphieq[xT,m]^39m^2mm^2/2*)-(*factor*)  27*NIntegrate[(*(  9 Sqrt[3]Sqrt[-1+E5t^2] Sqrt[-4+9/st] Sqrt[-((-3+2 E5t Sqrt[st]+st)/st)] )/Sqrt[9-6 E5t Sqrt[st]+st] (Sqrt[-1+z^2])/(E5t z+Sqrt[-1+E5t^2] xA Sqrt[-1+z^2])*)( E^(-((3 xT z)/Sqrt[st])) Sqrt[-1+E5t^2] Sqrt[3-(4 st)/3] Sqrt[3-2 E5t Sqrt[st]-st] Sqrt[-1+z^2])/(E5t st Sqrt[9-6 E5t Sqrt[st]+st] (z+(Sqrt[-1+E5t^2] xA Sqrt[-1+z^2])/E5t)) M[st,E5t,xA,xs,\[Phi]]^2 1/st^2,{st,10^-10,10^-5,10^-4,10^-2,10^-1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.85,0.9,0.95,0.99,0.999,1},{E5t,1,-( (-3+st)/(2 Sqrt[st]))},{xA,-1,0,1},{xs,-1,0,1},{\[Phi],0,2Pi},{z,1,1.01,1.1,1.2,1.3,2.,3.,5.,10.,20.,30.,100.},Method->{"QuasiMonteCarlo","MaxPoints"->points,"SymbolicProcessing"->0.},AccuracyGoal->ac,PrecisionGoal->13,WorkingPrecision->MachinePrecision];
+P2Eaverageds2[xT_?NumericQ,points_?NumericQ,ac_?NumericQ]:=(*1/nphieq[xT,m]^39m^2mm^2/2*)-(*factor*)  27NIntegrate[(*(  9 Sqrt[3]Sqrt[-1+E5t^2] Sqrt[-4+9/st] Sqrt[-((-3+2 E5t Sqrt[st]+st)/st)] )/Sqrt[9-6 E5t Sqrt[st]+st] (Sqrt[-1+z^2])/(E5t z+Sqrt[-1+E5t^2] xA Sqrt[-1+z^2])*)( E^(-((3 xT z)/Sqrt[st])) Sqrt[-1+E5t^2] Sqrt[3-(4 st)/3] Sqrt[3-2 E5t Sqrt[st]-st] Sqrt[-1+z^2])/(E5t st Sqrt[9-6 E5t Sqrt[st]+st] (z+(Sqrt[-1+E5t^2] xA Sqrt[-1+z^2])/E5t)) M[st,E5t,xA,xs,\[Phi]]^2 1/st^2,{st,10^-10,10^-5,10^-4,10^-2,10^-1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.85,0.9,0.95,0.99,0.999,1},{E5t,1,-( (-3+st)/(2 Sqrt[st]))},{xA,-1,0,1},{xs,-1,0,1},{\[Phi],0,2Pi},{z,1,1.01,1.1,1.2,1.3,2.,3.,5.,10.,20.,30.,100.},Method->{"QuasiMonteCarlo","MaxPoints"->points,"SymbolicProcessing"->0.},AccuracyGoal->ac,PrecisionGoal->13,WorkingPrecision->MachinePrecision];
