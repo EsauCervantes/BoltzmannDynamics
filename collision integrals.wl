@@ -50,27 +50,6 @@ average2to3[xt_,m_,ac_,points_]:=1/(8(2Pi)^4)*1/4 facC0 *m/xt 9m^2 m *(Sqrt[3]3)
 Method->{"QuasiMonteCarlo","MaxPoints"->points}]
 
 
-\[Sigma]2to3[0.1,9*0.1^2*1.5,10,10]
-
-
-9*0.1^2
-
-
-Ecm^2->s
-
-
-Sqrt[9*0.1^2*1.2]/2
-
-
-E1=Sqrt[9*0.1^2*1.5]/2;
-
-
-4Pi 1/(64Pi^2 s)/.s->(2E1)^2
-
-
-(0.0001920216100530995`/0.14736568804805122`)^-1
-
-
 (*f\[Sigma][]:=Module[{lphi=1,mphi=0.1,g=Sqrt[3 *0.1^2],m,b,r},
 
 ];
@@ -104,12 +83,6 @@ Compile[{{x,_Real,0},{st,_Real,0}},
 ];
 fac1=1/(8(2Pi)^4);
 average2to3wP2Ei[x_?NumericQ]:=(*fac11/nphieq[x,m]^39m^2(0.1/m)^2(6m^2)(3m^3)*)NIntegrate[IntegrandAveraged2to3wP2Ei[x,st],{st,0,10^-5,10^-4,10^-2,10^-1,0.2,0.5,0.8,0.85,0.9,0.99,0.999,1},AccuracyGoal->25,PrecisionGoal->25,WorkingPrecision->MachinePrecision]
-
-
-average2to3wP2Ei[1.]//Timing
-
-
-LogLogPlot[Qii[x,0.1],{x,0,20}]
 
 
 (* ::Section:: *)
@@ -166,9 +139,6 @@ f\[Sigma]T[]
 \[Sigma]tabulated=Import["files/tabulated_sigma,second_m.dat"];
 
 
-Pij=Sqrt[s-4m^2]/2;
-
-
 Assuming[m>0&&st>0&&E5t>0,st/Sqrt[9-4 st](*the term on the right is 1/(4F) in the cross section factor*) Pij *Sqrt[s]4 Pij *Sqrt[s]/.s->9 m^2/st//FullSimplify]
 
 
@@ -176,15 +146,6 @@ Assuming[m>0&&st>0,Exp[-Sqrt[s] cosh/Tphi]/.s->9 m^2/st/.Tphi->m/xT//FullSimplif
 
 
 \[Sigma]Ti = Interpolation[\[Sigma]tabulated/.{x_,y_,z_}->{x,y,Log10[z]},InterpolationOrder->1,Method->"Spline"];
-
-
-1/(1536 m^2 \[Pi]^4) Sqrt[3]m 3 /m^2 m
-
-
-1/(1536 m^2 \[Pi]^4)*Sqrt[3] 3/m m m
-
-
-1/(1536 m^2 \[Pi]^4)*Sqrt[3] 3/m m m 1/(2(2Pi)^4) 9m^4 9m^2
 
 
 averagesecondmom1[xT_?NumericQ,ac_,points_]:=NIntegrate[Sqrt[9-4 st]/st^3 Integrand[st,E5t,x,xs,\[Phi]]((Sqrt[st] BesselK[2,(3 xT)/Sqrt[st]])/(3 xT) E5t+2/27 (E^(-((3 xT)/Sqrt[st])) st (Sqrt[st]+3 xT))/ (xT^3) Sqrt[-1+E5t^2] x),{st,10^-10,10^-5,10^-4,10^-2,10^-1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.85,0.9,0.95,0.99,0.999,0.999999999999999,1},{E5t,1,(3-st)/(2 Sqrt[st])},{x,-1,1},{xs,-1,1},{\[Phi],0,2Pi},Method->{"QuasiMonteCarlo","MaxPoints"->points,"SymbolicProcessing"->0.},AccuracyGoal->ac,PrecisionGoal->20,WorkingPrecision->MachinePrecision]
