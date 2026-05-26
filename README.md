@@ -33,7 +33,7 @@ The solver tracks the evolution of the **dark-sector temperature** $T'$, allowin
 ### Stiff ODE handling
 
 The coupled Boltzmann equations are often **stiff** during cannibal phases.  
-We use a hardcoded adaptive solver to handle the stiffness during freeze-out. From the late-time asymptotic value of Y, the code computes the dark matter relic abundance
+We use a hardcoded adaptive solver to handle the stiffness during freeze-out. The adaptive solver is defined in the routine ODESolver2[]. From the late-time asymptotic value of Y, the code computes the dark matter relic abundance
 
 ### Run
 
