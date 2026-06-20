@@ -2,7 +2,7 @@
 
 This repository contains a **numerical solver for coupled Boltzmann equations** arising in self-interacting dark matter models produced via the freeze-in mechanism, as studied in
 
-> **E. Cervantes**, *Freezing-in cannibal dark sectors* (2024).  
+> **E. Cervantes and A. Hryczuk**, *Freezing-in cannibal dark sectors* (2024).  
 > [arXiv:2407.12104](https://arxiv.org/abs/2407.12104)
 
 The code is written in **Wolfram Mathematica** and is designed to be fully reproducible.
