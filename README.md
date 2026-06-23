@@ -5,7 +5,7 @@ This repository contains a **numerical solver for coupled Boltzmann equations** 
 > **E. Cervantes and A. Hryczuk**, *Freezing-in cannibal dark sectors* (2024).  
 > [arXiv:2407.12104](https://arxiv.org/abs/2407.12104)
 
-The code is written in **Wolfram Mathematica** and is designed to be fully reproducible.
+The code is written in **Wolfram Mathematica**.
 
 ---
 
